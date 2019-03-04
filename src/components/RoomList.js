@@ -20,6 +20,7 @@ class RoomList extends Component {
   }
 
   handleChange(e) {
+    e.preventDefault();
     this.setState({ name: e.target.value });
   }
 
@@ -37,13 +38,13 @@ class RoomList extends Component {
         <h1>This is the RoomList Component</h1>
         <ul>
           {this.state.rooms.map( (room) =>
-            <li key={room.key}>{room.name}</li>
+            <li key={room.key} onClick={() => this.props.setActiveRoom(room)}>{room.name}</li>
           )}
         </ul>
         <form onSubmit={ (e) => this.createRoom(e) }>
           <label for="room">Create New Room</label>
           <input type="text" id="room" value={this.state.name} onChange={ (e) => this.handleChange(e) } />
-          <button type="submit">Submit</button>
+          <button type="submit">Create Room</button>
         </form>
       </section>
     )
