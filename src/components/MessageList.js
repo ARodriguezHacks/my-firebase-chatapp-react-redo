@@ -28,7 +28,7 @@ class MessageList extends Component {
   handleChange(e) {
     e.preventDefault();
     this.setState({
-      username: 'BlocStudent',
+      username: this.props.currentUser,
       content: e.target.value,
       sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
       roomId: this.props.setActiveRoom
@@ -53,7 +53,9 @@ class MessageList extends Component {
         <ul>
           {this.state.messages.map( (message) => {
             if (message.roomId === this.props.setActiveRoom) {
-              return <li key={ message.key }>{message.content}</li>
+              return <li key={ message.key }>{message.content} <br />
+                <span><em>{message.username}</em></span>
+              </li>
               }
               return (null);
             })

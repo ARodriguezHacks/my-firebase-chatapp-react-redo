@@ -44,7 +44,7 @@ class App extends Component {
         <h2>{this.state.activeRoom.name || "Select Chat Room"}</h2>
         <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} />
         { this.state.activeRoom ?
-          (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key} />) : (null)
+          (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key} currentUser={this.state.user.displayName} />) : (null)
         }
       </div>
     );
