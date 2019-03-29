@@ -38,14 +38,32 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <h1>Welcome to the Chat!</h1>
-        <User firebase={firebase} currentUser={this.state.user} setUser={this.setUser} />
-        <h2>{this.state.activeRoom.name || "Select Chat Room"}</h2>
-        <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} />
-        { this.state.activeRoom ?
-          (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key}  currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
-        }
+      <div className="container bg-secondary">
+          <header className="row bg-warning">
+            <div className="col-4">
+              <h2>Bloc React Chat App</h2>
+            </div>
+            <div className="col-8">
+              <nav className="navbar">
+              <a className="nav-link" href="#">Rooms</a>
+              <a className="nav-link" href="#">About</a>
+              <a className="nav-link" href="#">Contact</a>
+                <ul className="nav">
+                  <li className="nav-item">
+                    <User firebase={firebase} currentUser={this.state.user} setUser={this.setUser} />
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </header>
+        <div>
+          <h1>Welcome to the Chat!</h1>
+          <h2>{this.state.activeRoom.name || "Select Chat Room"}</h2>
+          <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} />
+          { this.state.activeRoom ?
+            (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key}  currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
+          }
+        </div>
       </div>
     );
   }
