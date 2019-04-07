@@ -35,16 +35,18 @@ class RoomList extends Component {
   render() {
     return (
       <section>
-        <ul>
-          {this.state.rooms.map( (room) =>
-            <li key={room.key} onClick={() => this.props.setActiveRoom(room)}>{room.name}</li>
-          )}
-        </ul>
         <form onSubmit={ (e) => this.createRoom(e) }>
           <label for="room">Create New Room</label>
           <input type="text" id="room" value={this.state.name} onChange={ (e) => this.handleChange(e) } />
           <button type="submit">Create Room</button>
         </form>
+        <ul className="list-unstyled w-25">
+          {this.state.rooms.map( (room) =>
+            <div className="border">
+              <li key={room.key} className="p-2" onClick={() => this.props.setActiveRoom(room)}>{room.name}</li>
+            </div>
+          )}
+        </ul>
       </section>
     )
   }

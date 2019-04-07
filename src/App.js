@@ -56,13 +56,17 @@ class App extends Component {
               </nav>
             </div>
           </header>
-        <div>
-          <h1>Welcome to the Chat!</h1>
-          <h2>{this.state.activeRoom.name || "Select Chat Room"}</h2>
-          <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} />
-          { this.state.activeRoom ?
-            (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key}  currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
-          }
+        <div className="row">
+          <div className="col-5 bg-success">
+            <h2>Select Chat Room</h2>
+            <h3>Current Room: {this.state.activeRoom.name || null }</h3>
+            <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} />
+          </div>
+          <div className="col-7">
+            { this.state.activeRoom ?
+                (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key}  currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
+            }
+          </div>
         </div>
       </div>
     );

@@ -50,19 +50,24 @@ class MessageList extends Component {
   render() {
     return(
       <div>
-        <ul>
+        <h4>Messages</h4>
+        <ul className="list-unstyled">
           {this.state.messages.map( (message) => {
             if (message.roomId === this.props.setActiveRoom) {
-              return <li key={ message.key }>{message.content} <br />
-                <span><em>{message.username}</em></span>
-              </li>
+              return (
+              <div className="border bg-info">
+                <li key={ message.key }>{message.content} <br />
+                  <span><em>{message.username}</em></span>
+                </li>
+              </div> )
               }
               return (null);
             })
           }
         </ul>
         <form onSubmit={this.createMessage}>
-          <input type="text" value={this.state.content} onChange={this.handleChange} />
+          <label for="message">New Message</label> <br />
+          <input type="text" id="message" value={this.state.content} onChange={this.handleChange} />
           <input type="submit" value="Submit" />
         </form>
       </div>
