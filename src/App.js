@@ -41,7 +41,7 @@ class App extends Component {
       <div className="container bg-secondary">
           <header className="row bg-warning">
             <div className="col-4">
-              <h2>Bloc React Chat App</h2>
+              <h2>Parle!</h2>
             </div>
             <div className="col-8">
               <nav className="navbar">
