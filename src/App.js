@@ -60,7 +60,7 @@ class App extends Component {
           <div className="col-5 bg-success">
             <h2>Select Chat Room</h2>
             <h3>Current Room: {this.state.activeRoom.name || null }</h3>
-            <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} />
+            <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
           </div>
           <div className="col-7">
             { this.state.activeRoom ?
