@@ -1,6 +1,12 @@
 {
   "rules": {
-    ".read": false,
-    ".write": false
+    "rooms": {
+     ".read": "true",
+     ".write": "auth != null"
+   },
+   "messages": {
+     ".read": "true",
+     ".write": "auth != null"
+   }
   }
 }
