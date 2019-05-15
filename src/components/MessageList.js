@@ -66,7 +66,7 @@ class MessageList extends Component {
           }
         </ul>
         <form onSubmit={this.createMessage}>
-          <label for="message">New Message</label> <br />
+          <label>New Message</label> <br />
           <input type="text" id="message" value={this.state.content} onChange={this.handleChange} />
           <input type="submit" value="Submit" />
         </form>

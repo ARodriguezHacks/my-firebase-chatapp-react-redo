@@ -10,6 +10,7 @@ class RoomList extends Component {
     };
 
     this.roomsRef = this.props.firebase.database().ref('rooms');
+    this.messagesRef = this.props.firebase.database().ref('messages');
   }
 
   componentDidMount() {
@@ -17,6 +18,14 @@ class RoomList extends Component {
       const room = snapshot.val();
       room.key = snapshot.key;
       this.setState({ rooms: this.state.rooms.concat( room ) });
+    });
+  }
+
+  componentUnMounted() {
+    this.roomsRef.on('child_removed', snapshot => {
+      const roomToDelete = snapshot.val();
+      roomToDelete.key = snapshot.key;
+      this.setState({ rooms: this.state.rooms.splice(roomToDelete.key, 1) });
     });
   }
 
@@ -33,12 +42,42 @@ class RoomList extends Component {
     this.setState({ name: '' });
   }
 
+  deleteRoom(deleteKey, deleteName) {
+    const deletingRoom = this.roomsRef.child(deleteKey);
+    var output = [];
+
+    this.messagesRef.on('value', (snapshot) => {
+      snapshot.forEach( (childSnapshot) => {
+        var mysnap = childSnapshot.val();
+        mysnap.key = childSnapshot.key;
+        output.push(mysnap);
+      });
+    });
+
+    output.filter( childitem => {
+      if (childitem.roomId === deleteKey) {
+        var removeMessage = this.messagesRef.child(childitem.key);
+        removeMessage.remove();
+      }
+    });
+
+    deletingRoom.remove(function(error) {
+      alert(error ? "failed" : deleteName + " successfully deleted!")
+    });
+
+    this.props.setActiveRoom("");
+    const otherRooms = this.state.rooms.filter(room => room.key !== deleteKey);
+    this.setState({ rooms: otherRooms});
+  }
+
   render() {
     return (
       <section>
+      <h3>Current Room: {this.props.activeRoom.name || null }</h3>
+      { this.props.activeRoom? <button onClick={ () => this.deleteRoom(this.props.activeRoom.key, this.props.activeRoom.name) }>Delete Room</button> : null }
       { firebase.auth().currentUser ? (
         <form onSubmit={ (e) => this.createRoom(e) }>
-          <label for="room">Create New Room</label>
+          <label>Create New Room</label>
           <input type="text" id="room" value={this.state.name} onChange={ (e) => this.handleChange(e) } />
           <button type="submit">Create Room</button>
         </form>) : (<p>Please sign in to create chat rooms!</p>)
