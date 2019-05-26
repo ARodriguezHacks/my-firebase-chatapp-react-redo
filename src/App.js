@@ -41,23 +41,23 @@ class App extends Component {
   render() {
     return (
       <div className="container bg-secondary">
-          <header className="row bg-warning">
-            <div className="col-4">
-              <h2>Parle!</h2>
-            </div>
-            <div className="col-8">
-              <nav className="navbar">
-              <a className="nav-link" href="#">Rooms</a>
-              <a className="nav-link" href="#">About</a>
-              <a className="nav-link" href="#">Contact</a>
-                <ul className="nav">
-                  <li className="nav-item">
-                    <User firebase={firebase} currentUser={this.state.user} setUser={this.setUser} />
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </header>
+        <header className="row bg-warning">
+          <div className="col-4">
+            <h2>Parle!</h2>
+          </div>
+          <div className="col-8">
+            <nav className="navbar">
+            <a className="nav-link" href="#">Rooms</a>
+            <a className="nav-link" href="#">About</a>
+            <a className="nav-link" href="#">Contact</a>
+              <ul className="nav">
+                <li className="nav-item">
+                  <User firebase={firebase} currentUser={this.state.user} setUser={this.setUser} />
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </header>
         <div className="row">
           <div className="col-5 bg-success">
             <h2>Select Chat Room</h2>
@@ -70,6 +70,7 @@ class App extends Component {
           </div>
         </div>
       </div>
+      
     );
   }
 }

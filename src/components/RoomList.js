@@ -59,6 +59,7 @@ class RoomList extends Component {
         var removeMessage = this.messagesRef.child(childitem.key);
         removeMessage.remove();
       }
+      return null;
     });
 
     deletingRoom.remove(function(error) {
