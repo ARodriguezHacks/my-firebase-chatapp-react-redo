@@ -18,12 +18,6 @@ Make sure you have React installed. The simplest way is through the npm package 
 
 https://www.codecademy.com/articles/react-setup-i
 
-You will also want to install React Icons in order for the icons to properly appear when you open the app on your local environment:
-
-`npm install react-icons --save`
-
-For further install instructions: https://react-icons.netlify.com/#/
-
 # Installing
 
 `git clone git@github.com/ARodriguezHacks/travel-bucket-app.git` or create a fork.
