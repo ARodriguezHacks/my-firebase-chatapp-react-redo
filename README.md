@@ -69,11 +69,11 @@ class RoomList extends Component {
 
 ## Screenshots: 
 
-![Parle! Landing Page](assets/images/parlechatappmsgs.png)
+![Parle! Landing Page](assets/images/parlechat1.png)
 
-![Parle! Landing Page](assets/images/parlechatappnewmsg.png)
+![Parle! Landing Page](assets/images/parlechat2.png)
 
-![Parle! Landing Page](assets/images/parlechatdeleterm.png)
+![Parle! Landing Page](assets/images/parlechat3.png)
 ----------------------------------------
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
