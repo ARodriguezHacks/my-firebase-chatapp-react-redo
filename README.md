@@ -48,7 +48,22 @@ or
 
 Running `git clone` will create a new directory on your local machine called "parle-app" unless you specified a different name for the directory. Change directory (`cd`) into your newly cloned directory
 
-`$ cd rhythm-radio` or `$ cd your-preferref-name-for-project`
+`$ cd parle-app` or `$ cd your-preferred-name-for-project`
+
+Next run `npm install` to install the project's dependencies
+
+`$ npm install`
+
+Once `npm install` has finished installing, you can now run the project on your local server
+
+`$ npm start`
+
+Now you can start chatting away!
+
+Click on the image below to watch a demo on Dailymotion:
+[![Parle! Preview Video](assets/images/parlechat2.png)](https://www.dailymotion.com/video/k3L3qykV9I50KjtNaO5)
+
+Although guest users can only read and create messages, they will still be saved in the project's Firebase database. Only signed-up users can create and delete new chat rooms.
 
 ## Technologies/Frameworks used:
 
@@ -59,18 +74,24 @@ Running `git clone` will create a new directory on your local machine called "pa
 
 ## Sample Code:
 
+The sample code below is demonstrating the RoomList component for creating new chat rooms. By importing Firebase we're able to make a call to the project's Firebase database, specifically references to paths. In this example, 'rooms' and 'messages' are names of the paths that exist in the database, and within each path is where our rooms and messages are contained as objects. Rooms objects contain "name" and "username" keys, whereas Messages contain additional keys:
+
+RoomList.js
 ```
 import React, { Component } from 'react';
+import * as firebase from 'firebase';
 
 class RoomList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       rooms: [],
-      name: ''
+      name: '',
+      username: ''
     };
 
     this.roomsRef = this.props.firebase.database().ref('rooms');
+    this.messagesRef = this.props.firebase.database().ref('messages');
   }
 
   componentDidMount() {
@@ -81,27 +102,29 @@ class RoomList extends Component {
     });
   }
 
-  handleChange(e) {
-    e.preventDefault();
-    this.setState({ name: e.target.value });
-  }
+```
 
-  createRoom(e) {
-    e.preventDefault();
-    this.roomsRef.push({
-      name: this.state.name
-    });
-    this.setState({ name: '' });
-  }
+MessageList.js:
+```
+import React, { Component } from 'react';
+
+class MessageList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      messages: [],
+      username: '',
+      content: '',
+      sentAt: '',
+      roomId: ''
+    };
 
 ```
 
-## Screenshots: 
-
-![Parle! Landing Page](assets/images/parlechat2.png)
+## Additional Screenshots: 
 
 ![Parle! Landing Page](assets/images/parlechat3.png)
 
-## Contribute
+## How to Contribute
 
-If you would like to contribute to this project please send an email to angrodri902@gmail.com
+If you would like to contribute to Parle! please send an email to angrodri902@gmail.com
