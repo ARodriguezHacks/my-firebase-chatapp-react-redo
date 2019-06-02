@@ -6,7 +6,8 @@ class RoomList extends Component {
     super(props);
     this.state = {
       rooms: [],
-      name: ''
+      name: '',
+      username: ''
     };
 
     this.roomsRef = this.props.firebase.database().ref('rooms');
@@ -31,15 +32,16 @@ class RoomList extends Component {
 
   handleChange(e) {
     e.preventDefault();
-    this.setState({ name: e.target.value });
+    this.setState({ name: e.target.value, username: this.props.currentUser.displayName});
   }
 
   createRoom(e) {
     e.preventDefault();
     this.roomsRef.push({
-      name: this.state.name
+      name: this.state.name,
+      username: this.state.username
     });
-    this.setState({ name: '' });
+    this.setState({ name: '', username: '' });
   }
 
   deleteRoom(deleteKey, deleteName) {
@@ -75,7 +77,7 @@ class RoomList extends Component {
     return (
       <section>
       <h3>Current Room: {this.props.activeRoom.name || null }</h3>
-      { this.props.activeRoom? <button onClick={ () => this.deleteRoom(this.props.activeRoom.key, this.props.activeRoom.name) }>Delete Room</button> : null }
+      { firebase.auth().currentUser && this.props.activeRoom ? (<button onClick={ () => this.deleteRoom(this.props.activeRoom.key, this.props.activeRoom.name) }>Delete Room</button>) : null }
       { firebase.auth().currentUser ? (
         <form onSubmit={ (e) => this.createRoom(e) }>
           <label>Create New Room</label>
