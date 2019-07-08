@@ -55,8 +55,8 @@ class MessageList extends Component {
           {this.state.messages.map( (message) => {
             if (message.roomId === this.props.setActiveRoom) {
               return (
-              <div className="border bg-info">
-                <li key={ message.key }>{message.content} <br />
+              <div className="border bg-info" key={message.key}>
+                <li>{message.content} <br />
                   <span><em>{message.username}</em></span>
                 </li>
               </div> )

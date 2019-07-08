@@ -87,8 +87,8 @@ class RoomList extends Component {
       }
         <ul className="list-unstyled w-25">
           {this.state.rooms.map( (room) =>
-            <div className="border">
-              <li key={room.key} className="p-2" onClick={() => this.props.setActiveRoom(room)}>{room.name}</li>
+            <div className="border" key={room.key}>
+              <li className="p-2" onClick={() => this.props.setActiveRoom(room)}>{room.name}</li>
             </div>
           )}
         </ul>

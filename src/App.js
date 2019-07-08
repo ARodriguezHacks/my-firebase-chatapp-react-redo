@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import * as firebase from 'firebase'
+import * as firebase from 'firebase/app'
 import RoomList from './components/RoomList'
 import MessageList from './components/MessageList'
 import User from './components/User'
+import { Container, Row, Col } from 'react-bootstrap';
 
 var config = {
   apiKey: "AIzaSyBAaW9_hM4BHhPehRY3olFsxZi14eR5YAI",
@@ -36,29 +37,37 @@ class App extends Component {
     this.setState({ user: user });
   }
 
+  openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+  
+  /* Set the width of the side navigation to 0 */
+  closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
   //this.state.activeRoom.onClick = deleteRoom;
 
   render() {
     return (
-      <div className="container bg-secondary">
-        <header className="row bg-warning">
-          <div className="col-4">
+      <Container className="bg-secondary">
+        <Row className="bg-warning">
+          <Col>
             <h2>Parle!</h2>
-          </div>
-          <div className="col-8">
-            <nav className="navbar">
-            <a className="nav-link" href="#">Rooms</a>
-            <a className="nav-link" href="#">About</a>
-            <a className="nav-link" href="#">Contact</a>
-              <ul className="nav">
-                <li className="nav-item">
-                  <User firebase={firebase} currentUser={this.state.user} setUser={this.setUser} />
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </header>
-        <div className="row">
+          </Col>
+          <Col>
+            <User firebase={firebase} currentUser={this.state.user} setUser={this.setUser} />
+          </Col>
+        </Row>
+        <div id="mySidenav" className="sidenav">
+          <a href="javascript:void(0)" className="closebtn" onClick={this.closeNav}>&times;</a>
+          <a href="#">About</a>
+          <a href="#">Services</a>
+          <a href="#">Clients</a>
+          <a href="#">Contact</a>
+        </div>
+
+        <span onClick={this.openNav}>open</span>
+        <Row>
           <div className="col-5 bg-success">
             <h2>Select Chat Room</h2>
             <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
@@ -68,8 +77,8 @@ class App extends Component {
                 (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key}  currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
             }
           </div>
-        </div>
-      </div>
+        </Row>
+      </Container>
       
     );
   }
