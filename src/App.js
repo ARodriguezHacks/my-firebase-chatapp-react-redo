@@ -42,7 +42,8 @@ class App extends Component {
   }
   
   /* Set the width of the side navigation to 0 */
-  closeNav() {
+  closeNav(e) {
+    e.preventDefault();
     document.getElementById("mySidenav").style.width = "0";
   }
   //this.state.activeRoom.onClick = deleteRoom;
@@ -59,25 +60,17 @@ class App extends Component {
           </Col>
         </Row>
         <div id="mySidenav" className="sidenav">
-          <a href="javascript:void(0)" className="closebtn" onClick={this.closeNav}>&times;</a>
-          <a href="#">About</a>
-          <a href="#">Services</a>
-          <a href="#">Clients</a>
-          <a href="#">Contact</a>
+          <button className="closebtn" onClick={this.closeNav}>&times;</button>
+            <h2>Your Rooms</h2>
+            <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
         </div>
 
-        <span onClick={this.openNav}>open</span>
-        <Row>
-          <div className="col-5 bg-success">
-            <h2>Select Chat Room</h2>
-            <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
-          </div>
-          <div className="col-7">
-            { this.state.activeRoom ?
-                (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key}  currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
-            }
-          </div>
-        </Row>
+        <button onClick={this.openNav}>{`<<`}</button>
+        <div>
+          { this.state.activeRoom ?
+              (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key}  currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
+          }
+        </div>
       </Container>
       
     );
