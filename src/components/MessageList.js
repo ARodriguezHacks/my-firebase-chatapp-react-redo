@@ -50,12 +50,17 @@ class MessageList extends Component {
   render() {
     return(
       <div>
+        <form onSubmit={this.createMessage}>
+          <label>New Message</label> <br />
+          <input type="text" id="message" value={this.state.content} onChange={this.handleChange} />
+          <input type="submit" value="Submit" />
+        </form>
         <h4>Messages</h4>
         <ul className="list-unstyled">
           {this.state.messages.map( (message) => {
             if (message.roomId === this.props.setActiveRoom) {
               return (
-              <div className="border bg-info" key={message.key}>
+              <div className="border bg-info mb-2" key={message.key}>
                 <li>{message.content} <br />
                   <span><em>{message.username}</em></span>
                 </li>
@@ -65,11 +70,6 @@ class MessageList extends Component {
             })
           }
         </ul>
-        <form onSubmit={this.createMessage}>
-          <label>New Message</label> <br />
-          <input type="text" id="message" value={this.state.content} onChange={this.handleChange} />
-          <input type="submit" value="Submit" />
-        </form>
       </div>
     );
   }

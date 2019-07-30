@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
+import { Container, Row, Col, Button, ListGroup, ButtonGroup } from 'react-bootstrap';
 
 class RoomList extends Component {
   constructor(props) {
@@ -44,6 +45,17 @@ class RoomList extends Component {
     this.setState({ name: '', username: '' });
   }
 
+  //editRoom(roomKey) {
+    //console.log(this.roomsRef);
+    //const roomToEdit = this.roomsRef.child(roomKey);
+    //console.log(roomToEdit);
+  //}
+//
+  updateRoom(roomKey) {
+    const roomToEdit = this.roomsRef.child(roomKey);
+    console.log(roomToEdit);
+  }
+
   deleteRoom(deleteKey, deleteName) {
     const deletingRoom = this.roomsRef.child(deleteKey);
     var output = [];
@@ -85,13 +97,28 @@ class RoomList extends Component {
           <button type="submit">Create Room</button>
         </form>) : (<p>Please sign in to create chat rooms!</p>)
       }
-        <ul className="list-unstyled w-25">
+      <h4>Your rooms:</h4>
+      <Container className="overflow-auto rooms-container">
           {this.state.rooms.map( (room) =>
-            <div className="border" key={room.key}>
-              <li className="p-2" onClick={() => this.props.setActiveRoom(room)}>{room.name}</li>
-            </div>
+            <ListGroup key={room.key}>
+              <Row>
+                <Col>
+                  <ListGroup.Item id="roomId" onClick={() => this.props.setActiveRoom(room)}>{room.name}</ListGroup.Item>
+                </Col>
+                <Col>
+                { firebase.auth().currentUser && this.props.activeRoom ? ( 
+                  <ButtonGroup vertical>
+                    <Button variant="success" className="mb-1" onClick={ () => this.updateRoom(this.props.activeRoom.key)}>
+                    Edit</Button>
+                    <Button variant="danger" onClick={ () => this.deleteRoom(this.props.activeRoom.key, this.props.activeRoom.name)}>Delete</Button>
+                </ButtonGroup>
+                ) : (null)
+                }
+                </Col>
+              </Row>
+            </ListGroup>
           )}
-        </ul>
+        </Container>
       </section>
     )
   }
