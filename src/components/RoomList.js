@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-import { Container, Row, Col, Button, ListGroup, ButtonGroup } from 'react-bootstrap';
+import { Container, ListGroup } from 'react-bootstrap';
 
 class RoomList extends Component {
   constructor(props) {
@@ -8,7 +8,8 @@ class RoomList extends Component {
     this.state = {
       rooms: [],
       name: '',
-      username: ''
+      username: '',
+      editedRoom: ''
     };
 
     this.roomsRef = this.props.firebase.database().ref('rooms');
@@ -45,15 +46,11 @@ class RoomList extends Component {
     this.setState({ name: '', username: '' });
   }
 
-  //editRoom(roomKey) {
-    //console.log(this.roomsRef);
-    //const roomToEdit = this.roomsRef.child(roomKey);
-    //console.log(roomToEdit);
-  //}
-//
-  updateRoom(roomKey) {
-    const roomToEdit = this.roomsRef.child(roomKey);
-    console.log(roomToEdit);
+  updateRoomsList(roomKey) {
+    if (this.props.handleSave) {
+      
+    }
+
   }
 
   deleteRoom(deleteKey, deleteName) {
@@ -77,7 +74,7 @@ class RoomList extends Component {
     });
 
     deletingRoom.remove(function(error) {
-      alert(error ? "failed" : deleteName + " successfully deleted!")
+      alert(error ? "failed" : deleteName + " successfully deleted!");
     });
 
     this.props.setActiveRoom("");
@@ -88,36 +85,22 @@ class RoomList extends Component {
   render() {
     return (
       <section>
-      <h3>Current Room: {this.props.activeRoom.name || null }</h3>
-      { firebase.auth().currentUser && this.props.activeRoom ? (<button onClick={ () => this.deleteRoom(this.props.activeRoom.key, this.props.activeRoom.name) }>Delete Room</button>) : null }
-      { firebase.auth().currentUser ? (
-        <form onSubmit={ (e) => this.createRoom(e) }>
-          <label>Create New Room</label>
-          <input type="text" id="room" value={this.state.name} onChange={ (e) => this.handleChange(e) } />
-          <button type="submit">Create Room</button>
-        </form>) : (<p>Please sign in to create chat rooms!</p>)
-      }
-      <h4>Your rooms:</h4>
-      <Container className="overflow-auto rooms-container">
-          {this.state.rooms.map( (room) =>
-            <ListGroup key={room.key}>
-              <Row>
-                <Col>
-                  <ListGroup.Item id="roomId" onClick={() => this.props.setActiveRoom(room)}>{room.name}</ListGroup.Item>
-                </Col>
-                <Col>
-                { firebase.auth().currentUser && this.props.activeRoom ? ( 
-                  <ButtonGroup vertical>
-                    <Button variant="success" className="mb-1" onClick={ () => this.updateRoom(this.props.activeRoom.key)}>
-                    Edit</Button>
-                    <Button variant="danger" onClick={ () => this.deleteRoom(this.props.activeRoom.key, this.props.activeRoom.name)}>Delete</Button>
-                </ButtonGroup>
-                ) : (null)
-                }
-                </Col>
-              </Row>
+        { firebase.auth().currentUser ? (
+          <form onSubmit={ (e) => this.createRoom(e) }>
+            <label>Create New Room</label>
+            <input type="text" id="room" value={this.state.name} onChange={ (e) => this.handleChange(e) } />
+            <button type="submit">Create Room</button>
+          </form>) : (<p>Please sign in to create chat rooms!</p>)
+        }
+        <h4>Your rooms:</h4>
+        <Container className="overflow-auto rooms-container">
+            <ListGroup>
+            {this.state.rooms.map( (room) =>
+              <ListGroup.Item key={room.key} onClick={() => this.props.setActiveRoom(room)}>
+              { this.props.activeRoom.key === room.key ? this.props.activeRoom.name :
+              room.name }</ListGroup.Item>
+            )}
             </ListGroup>
-          )}
         </Container>
       </section>
     )
