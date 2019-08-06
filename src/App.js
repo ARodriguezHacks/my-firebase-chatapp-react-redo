@@ -60,6 +60,16 @@ class App extends Component {
     });
     console.log(this.state.value);
   }
+/*
+  updateCurrentRoom(e) {
+    e.preventDefault();
+    this.setState({
+      activeRoom: this.state.value,
+      editingRoom: false,
+      value: ''
+    });
+  }
+  */
 
   cancelSave(e) {
     e.preventDefault();
@@ -101,7 +111,7 @@ class App extends Component {
             <div id="mySidenav" className="sidenav text-center">
               <button className="closebtn" onClick={this.closeNav}>&times;</button>
                 <h2>Your Rooms</h2>
-                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} editingRoom={this.handleSave} />
+                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
             </div>
             <button onClick={this.openNav} className="btn btn-info mobile">{`< Select Room`}</button>
           </div>
@@ -117,7 +127,7 @@ class App extends Component {
                     <button type="submit">Save</button>
                     <button type="submit" onClick={(e) => this.cancelSave(e)}>Cancel</button>
                   </form>)
-                : (<h4 id="currentRoomName">{this.state.activeRoom.name || null }</h4>) 
+                : (<h4 id="currentRoomName">{this.state.activeRoom.name || this.state.activeRoom || null }</h4>) 
                 }
               { firebase.auth().currentUser && this.state.activeRoom ? (
                 <div>
@@ -125,7 +135,7 @@ class App extends Component {
                   <Button variant="danger" onClick={ () => this.deleteRoom(this.state.activeRoom.key, this.props.activeRoom.name) }>Delete Room</Button>
                 </div>) : null }
               </div>
-                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} handleSave={(e) => this.handleSave(e)} />
+                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} roomChange={this.state.value} />
               </Col>
               <Col>
                 { this.state.activeRoom ?

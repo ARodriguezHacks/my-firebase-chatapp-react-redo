@@ -46,12 +46,19 @@ class RoomList extends Component {
     this.setState({ name: '', username: '' });
   }
 
-  updateRoomsList(roomKey) {
-    if (this.props.handleSave) {
-      
-    }
+/* In progress: creating a function that will update rooms state dynamically when room name is edited
+  updateRoomChange(e, room) {
+    e.preventDefault();
+    room.name = this.props.activeRoom;
+    //var roomIndex = this.state.rooms.findIndex( (room) => {
+      //return (room.key === this.props.activeRooom.key && room.name !== this.props.activeRooom.name) 
+    //});
 
+    this.setState({
+      rooms: this.state.rooms.splice(room.key, 1, room)
+    });
   }
+  */
 
   deleteRoom(deleteKey, deleteName) {
     const deletingRoom = this.roomsRef.child(deleteKey);
@@ -96,9 +103,8 @@ class RoomList extends Component {
         <Container className="overflow-auto rooms-container">
             <ListGroup>
             {this.state.rooms.map( (room) =>
-              <ListGroup.Item key={room.key} onClick={() => this.props.setActiveRoom(room)}>
-              { this.props.activeRoom.key === room.key ? this.props.activeRoom.name :
-              room.name }</ListGroup.Item>
+              <ListGroup.Item key={room.key} onClick={() => this.props.setActiveRoom(room)} onChange={(e, room) => this.updateRoomChange(e, room)}>
+              { room.name }</ListGroup.Item>
             )}
             </ListGroup>
         </Container>
