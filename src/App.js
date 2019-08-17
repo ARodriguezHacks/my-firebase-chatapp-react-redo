@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import * as firebase from 'firebase/app'
-import RoomList from './components/RoomList'
-import MessageList from './components/MessageList'
-import User from './components/User'
-import { Container, Row, Col, Nav, Navbar, Button } from 'react-bootstrap';
+import * as firebase from 'firebase/app';
+import RoomList from './components/RoomList';
+import MessageList from './components/MessageList';
+import User from './components/User';
+import { Container, Row, Col, Nav, Navbar } from 'react-bootstrap';
 
 var config = {
   apiKey: "AIzaSyBAaW9_hM4BHhPehRY3olFsxZi14eR5YAI",
@@ -22,60 +22,16 @@ class App extends Component {
     super(props);
     this.state = {
       activeRoom: '',
-      user: '',
-      editingRoom: false,
-      value: ''
+      user: ''     
     };
 
     this.setActiveRoom = this.setActiveRoom.bind(this);
     this.setUser = this.setUser.bind(this);
-    this.roomsRef = firebase.database().ref('rooms');
   }
 
   setActiveRoom(room) {
     this.setState({ activeRoom: room });
-  }
-
-  editRoom() {
-    this.setState({
-      editingRoom: true,
-      value: this.state.activeRoom.name
-    });
-  }
-
-  handleChange(e) {
-    e.preventDefault();
-    this.setState({
-      value: e.target.value
-     });
-  }
-
-  handleSave(e) {
-    e.preventDefault();
-    this.roomsRef.child(this.state.activeRoom.key).update({name: this.state.value});
-    this.setState({
-      activeRoom: this.state.value,
-      editingRoom: false,
-      value: ''
-    });
-    console.log(this.state.value);
-  }
-/*
-  updateCurrentRoom(e) {
-    e.preventDefault();
-    this.setState({
-      activeRoom: this.state.value,
-      editingRoom: false,
-      value: ''
-    });
-  }
-  */
-
-  cancelSave(e) {
-    e.preventDefault();
-    this.setState({
-      editingRoom: false
-    });
+    console.log(this.state.activeRoom.name);
   }
 
   setUser(user) {
@@ -119,23 +75,7 @@ class App extends Component {
           <div className="non-mobile">
             <Row>
               <Col>
-              <div id="mainSection">
-                <h3>Current Room:</h3>
-                { this.state.editingRoom ? (
-                  <form onSubmit={(e) => this.handleSave(e)}>
-                    <input type="text" value={this.state.value} onChange={(e) => this.handleChange(e)} />
-                    <button type="submit">Save</button>
-                    <button type="submit" onClick={(e) => this.cancelSave(e)}>Cancel</button>
-                  </form>)
-                : (<h4 id="currentRoomName">{this.state.activeRoom.name || this.state.activeRoom || null }</h4>) 
-                }
-              { firebase.auth().currentUser && this.state.activeRoom ? (
-                <div>
-                  <Button variant="success" onClick={ () => this.editRoom(this.state.activeRoom) }>Edit Room</Button>
-                  <Button variant="danger" onClick={ () => this.deleteRoom(this.state.activeRoom.key, this.props.activeRoom.name) }>Delete Room</Button>
-                </div>) : null }
-              </div>
-                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} roomChange={this.state.value} />
+                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
               </Col>
               <Col>
                 { this.state.activeRoom ?
