@@ -4,7 +4,7 @@ import * as firebase from 'firebase/app';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
 import User from './components/User';
-import { Container, Row, Col, Nav, Navbar } from 'react-bootstrap';
+import { Container, Row, Col, Nav, Navbar, Button } from 'react-bootstrap';
 
 var config = {
   apiKey: "AIzaSyBAaW9_hM4BHhPehRY3olFsxZi14eR5YAI",
@@ -22,16 +22,19 @@ class App extends Component {
     super(props);
     this.state = {
       activeRoom: '',
-      user: ''     
+      user: '',
+      editingRoom: false,
+      roomChange: ''   
     };
 
     this.setActiveRoom = this.setActiveRoom.bind(this);
     this.setUser = this.setUser.bind(this);
+    this.roomsRef = firebase.database().ref('rooms');
   }
 
   setActiveRoom(room) {
     this.setState({ activeRoom: room });
-    console.log(this.state.activeRoom.name);
+    //console.log(this.roomsRef.child(this.state.activeRoom.key));
   }
 
   setUser(user) {
@@ -48,6 +51,46 @@ class App extends Component {
     document.getElementById("mySidenav").style.width = "0";
   }
   //this.state.activeRoom.onClick = deleteRoom;
+
+  editingRoom(e) {
+    e.preventDefault();
+    //newRoom.update({name: this.state.value});
+   // console.log(roomKey);
+    this.setState({
+      editingRoom: true,
+      roomChange: this.state.activeRoom.name
+      //value: this.state.activeRoom.name
+    });
+    //console.log(this.state.roomToEdit);
+  }
+
+  handleRoomChange(e) {
+    e.preventDefault();
+    this.setState({
+      roomChange: e.target.value
+    });
+    //this.roomsRef.child(this.props.editRoomKey).update({name: this.state.roomName});
+  }
+
+  updateRoom(e) {
+    e.preventDefault();
+    //this.roomsRef.child(this.state.activeRoom.key).update({name: this.state.value});
+    //this.roomsRef.child(this.state.activeRoom.key/"name").set({this.state.roomChange});
+    this.roomsRef.child(this.state.activeRoom.key).update({name: this.state.roomChange});
+    this.setState({
+      editingRoom: false,
+      activeRoom: this.state.roomChange,
+      roomChange: ''
+    });
+  }
+
+  cancelSave(e) {
+    e.preventDefault();
+    this.setState({
+      editingRoom: false,
+      roomChange: ''
+    });
+  }
 
   render() {
     return (
@@ -75,6 +118,21 @@ class App extends Component {
           <div className="non-mobile">
             <Row>
               <Col>
+              { this.state.activeRoom ?
+              (<div>
+                <h3>Current room: {this.state.activeRoom.name}</h3>
+                <div>
+                  <Button variant="success" className="mb-1" onClick={ (e) => this.editingRoom(e)}>Edit</Button>
+                  <Button variant="danger">Delete</Button>
+                </div>
+               </div>) : (<h3>Click on a room to get started!</h3>)
+              }
+              { this.state.editingRoom ?
+                (<form onSubmit={ (e) => this.updateRoom(e) }>
+                  <input type="text" id="editingRoom" value={this.state.roomChange} onChange={ (e) => this.handleRoomChange(e) } />
+                  <button type="submit">Save</button>
+                  <button type="submit" onClick={(e) => this.cancelSave(e)}>Cancel</button>
+                </form>) : null}
                 <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
               </Col>
               <Col>

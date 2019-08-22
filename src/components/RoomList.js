@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-import EditRoomForm from './EditRoomForm';
-import { Container, ListGroup, Button } from 'react-bootstrap';
+//import EditRoomForm from './EditRoomForm';
+import { Container, ListGroup,  } from 'react-bootstrap';
 
 class RoomList extends Component {
   constructor(props) {
@@ -10,7 +10,8 @@ class RoomList extends Component {
       rooms: [],
       name: '',
       username: '',
-      editingRoom: false,
+      reload: null
+      //editingRoom: false,
       //roomToEdit: ''
     };
 
@@ -24,14 +25,34 @@ class RoomList extends Component {
       room.key = snapshot.key;
       this.setState({ rooms: this.state.rooms.concat( room ) });
     });
+
+    var roomChanged = this.props.firebase.database().ref("rooms/" + this.props.activeRoom.key);
+      roomChanged.on('value', snapshot => {
+        let newRooms = [];
+        snapshot.forEach((snap) => {
+          if(snap.val().active === false) {
+            newRooms.push(snap.val());
+          }
+        });
+        this.setState({rooms: newRooms});
+      });
   }
-/*
+
+  //reloadBrowser() {
+  //  location
+  //}
+/*}
   componentWillUpdate() {
-    this.roomsRef.on('child_changed', snapshot => {
-      const roomToChange = snapshot.val();
-      roomToChange.key = snapshot.key;
-      this.setState({ rooms: this.state.rooms.splice(roomToChange.key, 1 )})
-    })
+    var childRoom = this.props.firebase.database().ref('rooms/' + this.props.activeRoom.key);
+    childRoom.on('value', snapshot => {
+      let updatedRooms = [];
+      snapshot.forEach((snap) => {
+        if(snap.val().active === true) {
+          updatedRooms.push(snap.val());
+        }
+      });
+      this.setState({rooms: updatedRooms});
+    });
   }
 */
   componentUnMounted() {
@@ -41,6 +62,7 @@ class RoomList extends Component {
       this.setState({ rooms: this.state.rooms.splice(roomToDelete.key, 1) });
     });
   }
+  
 
   handleChange(e) {
     e.preventDefault();
@@ -56,6 +78,12 @@ class RoomList extends Component {
     this.setState({ name: '', username: '' });
   }
 
+  randomClick(e) {
+    e.preventDefault();
+    var currentRoom = this.props.firebase.database().ref('rooms/' + this.props.activeRoom.key);
+    console.log(currentRoom);
+  }
+
 /* In progress: creating a function that will update rooms state dynamically when room name is edited
   updateRoomChange(e, room) {
     e.preventDefault();
@@ -68,8 +96,7 @@ class RoomList extends Component {
       rooms: this.state.rooms.splice(room.key, 1, room)
     });
   }
-  */
-
+  
   editRoom(e) {
     //newRoom.update({name: this.state.value});
    // console.log(roomKey);
@@ -79,6 +106,7 @@ class RoomList extends Component {
     });
     console.log(this.state.roomToEdit);
   }
+  */
 /*
   handleRoomChange(e) {
     e.preventDefault();
@@ -99,22 +127,19 @@ class RoomList extends Component {
 
   updateRoom(e) {
     e.preventDefault();
-    this.roomsRef.child(this.props.activeRoom.key).update({name: this.state.value});
+    //this.roomsRef.child(this.props.activeRoom).update({name: this.state.value});
     this.setState({
-      editingRoom: false,
-      name: ''
+      editingRoom: false
     });
   }
 
   cancelSave(e) {
     e.preventDefault();
     this.setState({
-      editingRoom: false,
-      name: ''
+      editingRoom: false
     });
   }
-  */
-
+*/
   deleteRoom(deleteKey, deleteName) {
     const deletingRoom = this.roomsRef.child(deleteKey);
     var output = [];
@@ -146,16 +171,7 @@ class RoomList extends Component {
 
   render() {
     return (
-      <section>
-        <h3>Current room: {this.props.activeRoom.name}</h3>
-        { this.state.editingRoom ? 
-        (<EditRoomForm firebase={this.props.firebase} editRoomKey={this.props.activeRoom.key} roomToEdit={this.props.activeRoom.name} roomEditingMode={this.state.editingRoom} />) : null}
-        { firebase.auth().currentUser && this.props.activeRoom ? (
-            <div> 
-              <Button variant="success" className="mb-1" onClick={ (e) => this.editRoom(e)}>Edit</Button>
-              <Button variant="danger" onClick={ () => this.deleteRoom(this.props.activeRoom.key, this.props.activeRoom.name)}>Delete</Button>
-            </div>) : null
-        }
+      <section>       
         { firebase.auth().currentUser ? (
         <form onSubmit={ (e) => this.createRoom(e) }>
           <label>Create New Room</label>
@@ -167,11 +183,12 @@ class RoomList extends Component {
         <Container className="overflow-auto rooms-container">
             <ListGroup>
             {this.state.rooms.map( (room) =>
-              <ListGroup.Item key={room.key} onClick={() => this.props.setActiveRoom(room)} onChange={(e, room) => this.updateRoomChange(e, room)}>
+              <ListGroup.Item key={room.key} onClick={() => this.props.setActiveRoom(room)}>
               { room.name }</ListGroup.Item>
             )}
             </ListGroup>
         </Container>
+        <p onClick={(e) => this.randomClick(e)}>Click here</p>
       </section>
     )
   }
