@@ -22,6 +22,7 @@ class App extends Component {
     super(props);
     this.state = {
       activeRoom: '',
+      activeRoomName: '',
       user: '',
       editingRoom: false,
       roomChange: ''   
@@ -33,8 +34,10 @@ class App extends Component {
   }
 
   setActiveRoom(room) {
-    this.setState({ activeRoom: room });
-    //console.log(this.roomsRef.child(this.state.activeRoom.key));
+    this.setState({
+       activeRoom: room,
+       activeRoomName: room.name, 
+      });
   }
 
   setUser(user) {
@@ -50,36 +53,28 @@ class App extends Component {
     e.preventDefault();
     document.getElementById("mySidenav").style.width = "0";
   }
-  //this.state.activeRoom.onClick = deleteRoom;
 
   editingRoom(e) {
     e.preventDefault();
-    //newRoom.update({name: this.state.value});
-   // console.log(roomKey);
     this.setState({
       editingRoom: true,
-      roomChange: this.state.activeRoom.name
-      //value: this.state.activeRoom.name
+      roomChange: this.state.activeRoomName
     });
-    //console.log(this.state.roomToEdit);
   }
 
   handleRoomChange(e) {
-    e.preventDefault();
     this.setState({
       roomChange: e.target.value
     });
-    //this.roomsRef.child(this.props.editRoomKey).update({name: this.state.roomName});
   }
 
   updateRoom(e) {
     e.preventDefault();
-    //this.roomsRef.child(this.state.activeRoom.key).update({name: this.state.value});
-    //this.roomsRef.child(this.state.activeRoom.key/"name").set({this.state.roomChange});
     this.roomsRef.child(this.state.activeRoom.key).update({name: this.state.roomChange});
+
     this.setState({
       editingRoom: false,
-      activeRoom: this.state.roomChange,
+      activeRoomName: this.state.roomChange,
       roomChange: ''
     });
   }
@@ -110,7 +105,7 @@ class App extends Component {
             <div id="mySidenav" className="sidenav text-center">
               <button className="closebtn" onClick={this.closeNav}>&times;</button>
                 <h2>Your Rooms</h2>
-                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
+                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} activeRoomName={this.state.activeRoomName} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
             </div>
             <button onClick={this.openNav} className="btn btn-info mobile">{`< Select Room`}</button>
           </div>
@@ -120,7 +115,7 @@ class App extends Component {
               <Col>
               { this.state.activeRoom ?
               (<div>
-                <h3>Current room: {this.state.activeRoom.name}</h3>
+                <h3>Current room: {this.state.activeRoomName}</h3>
                 <div>
                   <Button variant="success" className="mb-1" onClick={ (e) => this.editingRoom(e)}>Edit</Button>
                   <Button variant="danger">Delete</Button>
@@ -133,7 +128,7 @@ class App extends Component {
                   <button type="submit">Save</button>
                   <button type="submit" onClick={(e) => this.cancelSave(e)}>Cancel</button>
                 </form>) : null}
-                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
+                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} activeRoomName={this.state.activeRoomName} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
               </Col>
               <Col>
                 { this.state.activeRoom ?

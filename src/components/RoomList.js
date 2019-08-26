@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-//import EditRoomForm from './EditRoomForm';
 import { Container, ListGroup,  } from 'react-bootstrap';
 
 class RoomList extends Component {
@@ -9,10 +8,7 @@ class RoomList extends Component {
     this.state = {
       rooms: [],
       name: '',
-      username: '',
-      reload: null
-      //editingRoom: false,
-      //roomToEdit: ''
+      username: ''
     };
 
     this.roomsRef = this.props.firebase.database().ref('rooms');
@@ -26,35 +22,16 @@ class RoomList extends Component {
       this.setState({ rooms: this.state.rooms.concat( room ) });
     });
 
-    var roomChanged = this.props.firebase.database().ref("rooms/" + this.props.activeRoom.key);
-      roomChanged.on('value', snapshot => {
-        let newRooms = [];
-        snapshot.forEach((snap) => {
-          if(snap.val().active === false) {
-            newRooms.push(snap.val());
-          }
-        });
-        this.setState({rooms: newRooms});
-      });
-  }
-
-  //reloadBrowser() {
-  //  location
-  //}
-/*}
-  componentWillUpdate() {
-    var childRoom = this.props.firebase.database().ref('rooms/' + this.props.activeRoom.key);
-    childRoom.on('value', snapshot => {
-      let updatedRooms = [];
-      snapshot.forEach((snap) => {
-        if(snap.val().active === true) {
-          updatedRooms.push(snap.val());
-        }
-      });
-      this.setState({rooms: updatedRooms});
+    this.roomsRef.on('child_changed', snapshot => {
+      const updatedRoom = snapshot.val();
+      updatedRoom.key = snapshot.key;
+      let roomsCopy = JSON.parse(JSON.stringify(this.state.rooms));
+      var item = roomsCopy.find( item => item.key === updatedRoom.key);
+      item.name = updatedRoom.name;
+      this.setState({rooms: roomsCopy});
     });
   }
-*/
+
   componentUnMounted() {
     this.roomsRef.on('child_removed', snapshot => {
       const roomToDelete = snapshot.val();
@@ -62,7 +39,6 @@ class RoomList extends Component {
       this.setState({ rooms: this.state.rooms.splice(roomToDelete.key, 1) });
     });
   }
-  
 
   handleChange(e) {
     e.preventDefault();
@@ -78,68 +54,6 @@ class RoomList extends Component {
     this.setState({ name: '', username: '' });
   }
 
-  randomClick(e) {
-    e.preventDefault();
-    var currentRoom = this.props.firebase.database().ref('rooms/' + this.props.activeRoom.key);
-    console.log(currentRoom);
-  }
-
-/* In progress: creating a function that will update rooms state dynamically when room name is edited
-  updateRoomChange(e, room) {
-    e.preventDefault();
-    room.name = this.props.activeRoom;
-    //var roomIndex = this.state.rooms.findIndex( (room) => {
-      //return (room.key === this.props.activeRooom.key && room.name !== this.props.activeRooom.name) 
-    //});
-
-    this.setState({
-      rooms: this.state.rooms.splice(room.key, 1, room)
-    });
-  }
-  
-  editRoom(e) {
-    //newRoom.update({name: this.state.value});
-   // console.log(roomKey);
-    this.setState({
-      editingRoom: true
-      //value: this.state.activeRoom.name
-    });
-    console.log(this.state.roomToEdit);
-  }
-  */
-/*
-  handleRoomChange(e) {
-    e.preventDefault();
-    this.setState({
-      name: e.target.value
-    });
-  }
-  handleSave(e) {
-    e.preventDefault();
-    this.roomsRef.child(this.state.activeRoom.key).update({name: this.state.value});
-    this.setState({
-      activeRoom: this.state.value,
-      editingRoom: false,
-      value: ''
-    });
-    console.log(this.state.value);
-  }
-
-  updateRoom(e) {
-    e.preventDefault();
-    //this.roomsRef.child(this.props.activeRoom).update({name: this.state.value});
-    this.setState({
-      editingRoom: false
-    });
-  }
-
-  cancelSave(e) {
-    e.preventDefault();
-    this.setState({
-      editingRoom: false
-    });
-  }
-*/
   deleteRoom(deleteKey, deleteName) {
     const deletingRoom = this.roomsRef.child(deleteKey);
     var output = [];
@@ -188,7 +102,6 @@ class RoomList extends Component {
             )}
             </ListGroup>
         </Container>
-        <p onClick={(e) => this.randomClick(e)}>Click here</p>
       </section>
     )
   }
