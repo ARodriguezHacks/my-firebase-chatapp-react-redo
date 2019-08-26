@@ -30,13 +30,14 @@ class RoomList extends Component {
       item.name = updatedRoom.name;
       this.setState({rooms: roomsCopy});
     });
-  }
 
-  componentUnMounted() {
     this.roomsRef.on('child_removed', snapshot => {
       const roomToDelete = snapshot.val();
+      console.log(roomToDelete);
       roomToDelete.key = snapshot.key;
-      this.setState({ rooms: this.state.rooms.splice(roomToDelete.key, 1) });
+      let roomsCopy = JSON.parse(JSON.stringify(this.state.rooms));
+      var items = roomsCopy.filter( item => item.key !== roomToDelete.key);
+      this.setState({rooms: items});
     });
   }
 
@@ -53,7 +54,7 @@ class RoomList extends Component {
     });
     this.setState({ name: '', username: '' });
   }
-
+/*
   deleteRoom(deleteKey, deleteName) {
     const deletingRoom = this.roomsRef.child(deleteKey);
     var output = [];
@@ -82,8 +83,9 @@ class RoomList extends Component {
     const otherRooms = this.state.rooms.filter(room => room.key !== deleteKey);
     this.setState({ rooms: otherRooms});
   }
-
+*/
   render() {
+    //const filteredList = this.filter(this.state.rooms);
     return (
       <section>       
         { firebase.auth().currentUser ? (

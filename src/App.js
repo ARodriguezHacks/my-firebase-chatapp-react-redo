@@ -25,12 +25,13 @@ class App extends Component {
       activeRoomName: '',
       user: '',
       editingRoom: false,
-      roomChange: ''   
+      roomChange: '',
     };
 
     this.setActiveRoom = this.setActiveRoom.bind(this);
     this.setUser = this.setUser.bind(this);
     this.roomsRef = firebase.database().ref('rooms');
+    this.messagesRef = firebase.database().ref('messages');
   }
 
   setActiveRoom(room) {
@@ -87,6 +88,39 @@ class App extends Component {
     });
   }
 
+  deleteRoom(e) {
+    e.preventDefault();
+    var roomToDelete = this.roomsRef.child(this.state.activeRoom.key);
+    var roomToDeleteName = this.state.activeRoom.name;
+
+    var output = [];
+
+    this.messagesRef.on('value', (snapshot) => {
+      snapshot.forEach( (childSnapshot) => {
+        var mysnap = childSnapshot.val();
+        mysnap.key = childSnapshot.key;
+        output.push(mysnap);
+      });
+    });
+
+    output.filter( childitem => {
+      if (childitem.roomId === roomToDelete) {
+        var removeMessage = this.messagesRef.child(childitem.key);
+        removeMessage.remove();
+      }
+      return null;
+    });
+
+    roomToDelete.remove(function(error) {
+      alert(error ? "failed" : roomToDeleteName + " successfully deleted!");
+    });
+
+    this.setState({
+      activeRoom: '',
+      activeRoomName: ''
+    });    
+  }
+
   render() {
     return (
       <div>
@@ -118,7 +152,7 @@ class App extends Component {
                 <h3>Current room: {this.state.activeRoomName}</h3>
                 <div>
                   <Button variant="success" className="mb-1" onClick={ (e) => this.editingRoom(e)}>Edit</Button>
-                  <Button variant="danger">Delete</Button>
+                  <Button variant="danger" onClick={ (e) => this.deleteRoom(e)}>Delete</Button>
                 </div>
                </div>) : (<h3>Click on a room to get started!</h3>)
               }
