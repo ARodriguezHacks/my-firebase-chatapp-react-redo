@@ -54,38 +54,8 @@ class RoomList extends Component {
     });
     this.setState({ name: '', username: '' });
   }
-/*
-  deleteRoom(deleteKey, deleteName) {
-    const deletingRoom = this.roomsRef.child(deleteKey);
-    var output = [];
 
-    this.messagesRef.on('value', (snapshot) => {
-      snapshot.forEach( (childSnapshot) => {
-        var mysnap = childSnapshot.val();
-        mysnap.key = childSnapshot.key;
-        output.push(mysnap);
-      });
-    });
-
-    output.filter( childitem => {
-      if (childitem.roomId === deleteKey) {
-        var removeMessage = this.messagesRef.child(childitem.key);
-        removeMessage.remove();
-      }
-      return null;
-    });
-
-    deletingRoom.remove(function(error) {
-      alert(error ? "failed" : deleteName + " successfully deleted!");
-    });
-
-    this.props.setActiveRoom("");
-    const otherRooms = this.state.rooms.filter(room => room.key !== deleteKey);
-    this.setState({ rooms: otherRooms});
-  }
-*/
   render() {
-    //const filteredList = this.filter(this.state.rooms);
     return (
       <section>       
         { firebase.auth().currentUser ? (
