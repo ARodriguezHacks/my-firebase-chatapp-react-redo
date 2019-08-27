@@ -135,13 +135,36 @@ class App extends Component {
         <Container className="bg-secondary">
 
           <div className="mobile">
-            <h2>Select Room to get started!</h2>
+            {this.state.activeRoom ?
+              (<div>
+                <h3>Current room: {this.state.activeRoomName}</h3>
+                <button onClick={this.openNav} className="btn btn-info mobile">{`< Change Room`}</button>
+                <div>
+                  <Button variant="success" onClick={ (e) => this.editingRoom(e)}>Edit</Button>
+                  <Button variant="danger" onClick={ (e) => this.deleteRoom(e)}>Delete</Button>
+                </div>
+              </div>) : 
+              (<div>
+                <h2>Select Room to get started!</h2>
+                <button onClick={this.openNav} className="btn btn-info mobile">{`< Select Room`}</button>
+              </div>)
+            }
+
+            { this.state.editingRoom ?
+              (<form onSubmit={ (e) => this.updateRoom(e) }>
+                <input type="text" id="editingRoom" value={this.state.roomChange} onChange={ (e) => this.handleRoomChange(e) } />
+                <button type="submit">Save</button>
+                <button type="submit" onClick={(e) => this.cancelSave(e)}>Cancel</button>
+              </form>) : null
+            }            
+            { this.state.activeRoom ?
+                (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key}  currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
+            }
+            
             <div id="mySidenav" className="sidenav text-center">
               <button className="closebtn" onClick={this.closeNav}>&times;</button>
-                <h2>Your Rooms</h2>
                 <RoomList firebase={firebase} activeRoom={this.state.activeRoom} activeRoomName={this.state.activeRoomName} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
             </div>
-            <button onClick={this.openNav} className="btn btn-info mobile">{`< Select Room`}</button>
           </div>
 
           <div className="non-mobile">
@@ -152,7 +175,7 @@ class App extends Component {
                 <h3>Current room: {this.state.activeRoomName}</h3>
                 <div>
                   <Button variant="success" className="mb-1" onClick={ (e) => this.editingRoom(e)}>Edit</Button>
-                  <Button variant="danger" onClick={ (e) => this.deleteRoom(e)}>Delete</Button>
+                  <Button variant="danger"className="mb-1" onClick={ (e) => this.deleteRoom(e)}>Delete</Button>
                 </div>
                </div>) : (<h3>Click on a room to get started!</h3>)
               }
