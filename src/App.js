@@ -132,21 +132,24 @@ class App extends Component {
             </li>
           </Nav>
         </Navbar>
-        <Container className="bg-secondary">
+        <div className="bg-secondary">
 
           <div className="mobile">
             {this.state.activeRoom ?
-              (<div>
-                <h3>Current room: {this.state.activeRoomName}</h3>
-                <button onClick={this.openNav} className="btn btn-info mobile">{`< Change Room`}</button>
-                <div>
+              (<Row>
+                <Col className="column-left-mobile">
+                  <h3>Current room:</h3>
+                  <h3>{this.state.activeRoomName}</h3>
+                  <Button onClick={this.openNav} className="btn btn-info mobile">{`< Change Room`}</Button>
+                </Col>
+                <Col className="pt-5">
                   <Button variant="success" onClick={ (e) => this.editingRoom(e)}>Edit</Button>
                   <Button variant="danger" onClick={ (e) => this.deleteRoom(e)}>Delete</Button>
-                </div>
-              </div>) : 
+                </Col>
+              </Row>) : 
               (<div>
                 <h2>Select Room to get started!</h2>
-                <button onClick={this.openNav} className="btn btn-info mobile">{`< Select Room`}</button>
+                <Button onClick={this.openNav} className="btn btn-info mobile">{`< Select Room`}</Button>
               </div>)
             }
 
@@ -169,7 +172,7 @@ class App extends Component {
 
           <div className="non-mobile">
             <Row>
-              <Col>
+              <Col className="col-4 col-margin">
               { this.state.activeRoom ?
               (<div>
                 <h3>Current room: {this.state.activeRoomName}</h3>
@@ -194,7 +197,7 @@ class App extends Component {
               </Col>
             </Row>
             </div>
-        </Container>
+        </div>
       </div>
     );
   }

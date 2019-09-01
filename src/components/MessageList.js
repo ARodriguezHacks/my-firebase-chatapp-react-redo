@@ -47,29 +47,32 @@ class MessageList extends Component {
     this.setState({ username: '', content: '', sentAt: '', roomId: '' });
   }
 
+  //<input type="text" id="message" value={this.state.content} onChange={this.handleChange} />
   render() {
     return(
       <div>
         <form onSubmit={this.createMessage}>
           <label>New Message</label> <br />
-          <input type="text" id="message" value={this.state.content} onChange={this.handleChange} />
-          <input type="submit" value="Submit" />
+          <textarea id="message" className="message-box" placeholder="New Message" value={this.state.content} onChange={this.handleChange}></textarea>
+          <input type="submit" className="btn-blue" value="Submit" />
         </form>
-        <h4>Messages</h4>
-        <ul className="list-unstyled">
-          {this.state.messages.map( (message) => {
-            if (message.roomId === this.props.setActiveRoom) {
-              return (
-              <div className="border bg-info mb-2" key={message.key}>
-                <li>{message.content} <br />
-                  <span><em>{message.username}</em></span>
-                </li>
-              </div> )
-              }
-              return (null);
-            })
-          }
-        </ul>
+        <div className="message-margin">
+          <h4>Messages</h4>
+          <ul className="list-unstyled">
+            {this.state.messages.map( (message) => {
+              if (message.roomId === this.props.setActiveRoom) {
+                return (
+                <div className="border bg-info mb-2" key={message.key}>
+                  <li>{message.content} <br />
+                    <span><em>{message.username}</em></span>
+                  </li>
+                </div> )
+                }
+                return (null);
+              })
+            }
+          </ul>
+        </div>
       </div>
     );
   }

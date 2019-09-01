@@ -41,8 +41,33 @@
   .non-mobile {
     display: none;
   }
+
+  .message-box {
+    width: 95%;
+    margin: auto;
+    text-align: center;
+  }
+
+  .list-unstyled {
+    width: 95%;
+    margin: auto;
+  }
 }
 
+.column-left-mobile {
+  margin-left: 5px;
+  text-align: center;
+}
+
+form {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.btn-blue {
+  background-color: rgb(101, 182, 236);
+  width: 95%;
+}
 /* ------ Tablet and Desktop styles ------- */
 
 @media screen and (min-width: 768px) {
@@ -53,5 +78,31 @@
 
   .rooms-container {
     height: 50vh;
+  }
+
+  .col-margin {
+    margin-left: 10px;
+  }
+
+  form {
+    max-width: 400px;
+  }
+
+  .message-box {
+    width: 400px;
+    height: 100px;
+  }
+
+  .list-unstyled {
+    width: 400px;
+  }
+
+  .btn-blue {
+    background-color: rgb(101, 182, 236);
+    width: 100%;
+  }
+
+  .message-margin {
+    margin-top: 20px;
   }
 }
