@@ -57,23 +57,27 @@ class RoomList extends Component {
 
   render() {
     return (
-      <section>       
-        { firebase.auth().currentUser ? (
-        <form onSubmit={ (e) => this.createRoom(e) }>
-          <label>Create New Room</label>
-          <input type="text" id="room" value={this.state.name} onChange={ (e) => this.handleChange(e) } />
-          <button type="submit">Create Room</button>
-        </form>) : (<p>Please sign in to create chat rooms!</p>)
-      }
-        <h4>Your rooms:</h4>
-        <Container className="overflow-auto rooms-container">
-            <ListGroup>
-            {this.state.rooms.map( (room) =>
-              <ListGroup.Item key={room.key} onClick={() => this.props.setActiveRoom(room)}>
-              { room.name }</ListGroup.Item>
-            )}
-            </ListGroup>
-        </Container>
+      <section>
+        <div className="rooms-margin">       
+          { firebase.auth().currentUser ? (
+          <form onSubmit={ (e) => this.createRoom(e) }>
+            <label>Create New Room</label>
+            <input type="text" id="room" value={this.state.name} onChange={ (e) => this.handleChange(e) } required/>
+            <button type="submit">Create Room</button>
+          </form>) : (<p>Please sign in to create chat rooms!</p>)
+          }
+        </div>
+        <div className="rooms-margin">
+          <h4>Your rooms:</h4>
+          <Container className="overflow-auto rooms-container">
+              <ListGroup>
+              {this.state.rooms.map( (room) =>
+                <ListGroup.Item key={room.key} onClick={() => this.props.setActiveRoom(room)}>
+                { room.name }</ListGroup.Item>
+              )}
+              </ListGroup>
+          </Container>
+        </div>
       </section>
     )
   }

@@ -53,18 +53,20 @@ class MessageList extends Component {
       <div>
         <form onSubmit={this.createMessage}>
           <label>New Message</label> <br />
-          <textarea id="message" className="message-box" placeholder="New Message" value={this.state.content} onChange={this.handleChange}></textarea>
-          <input type="submit" className="btn-blue" value="Submit" />
+          <div className="message-area">
+            <textarea id="message" className="message-box" value={this.state.content} onChange={this.handleChange} required></textarea>
+            <input type="submit" className="btn-blue" value="Submit" />
+          </div>
         </form>
         <div className="message-margin">
           <h4>Messages</h4>
-          <ul className="list-unstyled">
+          <ul className="list-unstyled overflow-auto messages-container">
             {this.state.messages.map( (message) => {
               if (message.roomId === this.props.setActiveRoom) {
                 return (
-                <div className="border bg-info mb-2" key={message.key}>
+                <div className="border bg-white mb-2" key={message.key}>
                   <li>{message.content} <br />
-                    <span><em>{message.username}</em></span>
+                    <span><strong><em>{message.username}</em></strong></span>
                   </li>
                 </div> )
                 }

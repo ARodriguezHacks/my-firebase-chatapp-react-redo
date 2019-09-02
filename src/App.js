@@ -4,7 +4,7 @@ import * as firebase from 'firebase/app';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
 import User from './components/User';
-import { Container, Row, Col, Nav, Navbar, Button } from 'react-bootstrap';
+import { Row, Col, Nav, Navbar, Button } from 'react-bootstrap';
 
 var config = {
   apiKey: "AIzaSyBAaW9_hM4BHhPehRY3olFsxZi14eR5YAI",
@@ -37,7 +37,9 @@ class App extends Component {
   setActiveRoom(room) {
     this.setState({
        activeRoom: room,
-       activeRoomName: room.name, 
+       activeRoomName: room.name,
+       editingRoom: false,
+       roomChange: '' 
       });
   }
 
@@ -124,15 +126,15 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar className="d-flex justify-content-between">
-          <Navbar.Brand>Parle!</Navbar.Brand>
+        <Navbar className="d-flex blue-nav justify-content-between">
+          <Navbar.Brand className="logo">Parle!</Navbar.Brand>
           <Nav>
             <li>
               <User firebase={firebase} currentUser={this.state.user} setUser={this.setUser} />
             </li>
           </Nav>
         </Navbar>
-        <div className="bg-secondary">
+        <div>
 
           <div className="mobile">
             {this.state.activeRoom ?
@@ -142,12 +144,15 @@ class App extends Component {
                   <h3>{this.state.activeRoomName}</h3>
                   <Button onClick={this.openNav} className="btn btn-info mobile">{`< Change Room`}</Button>
                 </Col>
-                <Col className="pt-5">
-                  <Button variant="success" onClick={ (e) => this.editingRoom(e)}>Edit</Button>
+                { this.state.user ?
+                <Col className="column-right-mobile pt-5">
+                  <Button variant="success" className="btn-spacing" onClick={ (e) => this.editingRoom(e)}>Edit</Button>
                   <Button variant="danger" onClick={ (e) => this.deleteRoom(e)}>Delete</Button>
                 </Col>
+                 : null
+                }
               </Row>) : 
-              (<div>
+              (<div className="ml-2">
                 <h2>Select Room to get started!</h2>
                 <Button onClick={this.openNav} className="btn btn-info mobile">{`< Select Room`}</Button>
               </div>)
@@ -173,13 +178,23 @@ class App extends Component {
           <div className="non-mobile">
             <Row>
               <Col className="col-4 col-margin">
+                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} activeRoomName={this.state.activeRoomName} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
+              </Col>
+              <Col>
+                { this.state.activeRoom ?
+                    (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key}  currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
+                }
+              </Col>
+              <Col>
               { this.state.activeRoom ?
               (<div>
                 <h3>Current room: {this.state.activeRoomName}</h3>
+                { this.state.user? 
                 <div>
-                  <Button variant="success" className="mb-1" onClick={ (e) => this.editingRoom(e)}>Edit</Button>
+                  <Button variant="success" className="mb-1 btn-spacing" onClick={ (e) => this.editingRoom(e)}>Edit</Button>
                   <Button variant="danger"className="mb-1" onClick={ (e) => this.deleteRoom(e)}>Delete</Button>
-                </div>
+                </div> : null
+                }
                </div>) : (<h3>Click on a room to get started!</h3>)
               }
               { this.state.editingRoom ?
@@ -188,12 +203,6 @@ class App extends Component {
                   <button type="submit">Save</button>
                   <button type="submit" onClick={(e) => this.cancelSave(e)}>Cancel</button>
                 </form>) : null}
-                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} activeRoomName={this.state.activeRoomName} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
-              </Col>
-              <Col>
-                { this.state.activeRoom ?
-                    (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key}  currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
-                }
               </Col>
             </Row>
             </div>

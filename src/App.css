@@ -1,4 +1,20 @@
+/* ------- Universal Styles -----*/
+.logo {
+  font-family: 'Patua One', cursive;
+  font-size: 42px;
+}
 
+.blue-nav {
+  background-color: rgb(101, 182, 236);
+}
+
+.btn-spacing {
+  margin-right: 5px;
+}
+
+ul li {
+  padding: 5px;
+}
 
 /* ------- Mobile Styles -----*/
 @media screen and (max-width: 767px) {
@@ -45,28 +61,46 @@
   .message-box {
     width: 95%;
     margin: auto;
-    text-align: center;
   }
 
   .list-unstyled {
     width: 95%;
     margin: auto;
   }
-}
 
-.column-left-mobile {
-  margin-left: 5px;
-  text-align: center;
-}
+  .row {
+    max-width: 100%;
+  }
 
-form {
-  text-align: center;
-  margin-top: 25px;
-}
+  .column-left-mobile {
+    text-align: center;
+    width: 50%;
+    margin-left: 5px;
+    padding-right: 0px;
+  }
 
-.btn-blue {
-  background-color: rgb(101, 182, 236);
-  width: 95%;
+  .column-right-mobile {
+    width: 50%;
+    padding-right: 0;
+    text-align: center;
+  }
+
+  form {
+    margin-top: 25px;
+  }
+
+  .message-area {
+    text-align: center;
+  }
+
+  .btn-blue {
+    background-color: rgb(101, 182, 236);
+    width: 95%;
+  }
+
+  .message-margin {
+    margin-top: 20px;
+  }
 }
 /* ------ Tablet and Desktop styles ------- */
 
@@ -78,6 +112,14 @@ form {
 
   .rooms-container {
     height: 50vh;
+  }
+
+  .rooms-margin {
+    margin-top: 20px;
+  }
+
+  .row {
+    max-width: 100%;
   }
 
   .col-margin {
@@ -104,5 +146,9 @@ form {
 
   .message-margin {
     margin-top: 20px;
+  }
+
+  .messages-container {
+    height: 70vh;
   }
 }
