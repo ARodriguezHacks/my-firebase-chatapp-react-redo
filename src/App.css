@@ -16,6 +16,22 @@ ul li {
   padding: 5px;
 }
 
+#signUp-form {
+  position: absolute;
+  top: 50%;
+  right: 30%;
+  width: 30rem;
+  height: 18rem;
+  background-color: rgb(54, 183, 153);
+  border: 1px solid rgb(0, 0, 0);
+  z-index: 1;
+  visibility: hidden;
+}
+#email, #password {
+  display: block;
+  width: 90%;
+  margin: 0.25rem 0;
+}
 /* ------- Mobile Styles -----*/
 @media screen and (max-width: 767px) {
 
