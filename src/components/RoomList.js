@@ -62,7 +62,7 @@ class RoomList extends Component {
           { firebase.auth().currentUser ? (
           <form onSubmit={ (e) => this.createRoom(e) }>
             <label>Create New Room</label>
-            <input type="text" id="room" value={this.state.name} onChange={ (e) => this.handleChange(e) } required/>
+            <input type="text" value={this.state.name} onChange={ (e) => this.handleChange(e) } required/>
             <button type="submit">Create Room</button>
           </form>) : (<p>Please sign in to create chat rooms!</p>)
           }

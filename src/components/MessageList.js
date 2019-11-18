@@ -47,14 +47,13 @@ class MessageList extends Component {
     this.setState({ username: '', content: '', sentAt: '', roomId: '' });
   }
 
-  //<input type="text" id="message" value={this.state.content} onChange={this.handleChange} />
   render() {
     return(
       <div>
         <form onSubmit={this.createMessage}>
           <label>New Message</label> <br />
           <div className="message-area">
-            <textarea id="message" className="message-box" value={this.state.content} onChange={this.handleChange} required></textarea>
+            <textarea className="message-box" value={this.state.content} onChange={this.handleChange} required></textarea>
             <input type="submit" className="btn-blue" value="Submit" />
           </div>
         </form>
