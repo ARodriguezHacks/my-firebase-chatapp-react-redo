@@ -140,8 +140,6 @@ class App extends Component {
             {this.state.activeRoom ?
               (<Row>
                 <Col className="column-left-mobile">
-                  <h3>Current room:</h3>
-                  <h3>{this.state.activeRoomName}</h3>
                   <Button onClick={this.openNav} className="btn btn-info mobile">{`< Change Room`}</Button>
                 </Col>
                 { this.state.user ?
@@ -166,7 +164,7 @@ class App extends Component {
               </form>) : null
             }            
             { this.state.activeRoom ?
-                (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key}  currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
+                (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key} activeRoomName={this.state.activeRoomName} currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
             }
             
             <div id="mySidenav" className="sidenav text-center">
@@ -182,13 +180,12 @@ class App extends Component {
               </Col>
               <Col>
                 { this.state.activeRoom ?
-                    (<MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key}  currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />) : (null)
+                    (<div>
+                      <MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key} activeRoomName={this.state.activeRoomName} currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />
+                    </div>) : (null)
                 }
-              </Col>
-              <Col>
               { this.state.activeRoom ?
               (<div>
-                <h3>Current room: {this.state.activeRoomName}</h3>
                 { this.state.user? 
                 <div>
                   <Button variant="success" className="mb-1 btn-spacing" onClick={ (e) => this.editingRoom(e)}>Edit</Button>

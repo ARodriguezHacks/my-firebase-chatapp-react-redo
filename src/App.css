@@ -9,7 +9,7 @@ nav {
 }
 
 .blue-nav {
-  background-color: rgb(101, 182, 236);
+  background-color: rgb(101, 182, 236, 0.75);
 }
 
 .btn-spacing {
@@ -17,7 +17,7 @@ nav {
 }
 
 ul li {
-  padding: 5px;
+  padding: 1rem;
 }
 
 #signUp-form, #signIn-form {
@@ -27,7 +27,7 @@ ul li {
   margin-right: auto;
   left: 0;
   right: 0;
-  background-color: rgb(54, 183, 153);
+  background-color: #c8dad6;
   box-shadow: 0px 0px 10px grey;
   z-index: 1;
   visibility: hidden;
@@ -41,6 +41,16 @@ ul li {
   display: block;
   width: 90%;
   margin: 0.25rem 0;
+}
+
+#email-signin, #password-signin {
+  display: block;
+  width: 70%;
+  margin: 0.25rem 0;
+}
+
+.session-btn {
+  background-color: #6569e4;
 }
 
 .submit-btn {
@@ -63,7 +73,7 @@ ul li {
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #3a64e0; /* Black*/
+    background-color: rgb(101, 182, 236); /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -126,7 +136,15 @@ ul li {
   }
 
   .message-margin {
-    margin-top: 20px;
+    margin-top: 1rem;
+  }
+
+  .messages-container {
+    height: 50vh;
+  }
+
+  .form-margin {
+    margin-top: 2rem;
   }
 }
 
@@ -159,8 +177,7 @@ ul li {
   }
 
   .message-box {
-    width: 400px;
-    height: 100px;
+    width: 90%;
   }
 
   .list-unstyled {
@@ -169,14 +186,12 @@ ul li {
 
   .btn-blue {
     background-color: rgb(101, 182, 236);
-    width: 100%;
-  }
-
-  .message-margin {
-    margin-top: 20px;
+    width: 20%;
+    padding: 0.5rem;
   }
 
   .messages-container {
-    height: 70vh;
+    height: 52vh;
+    width: 90%;
   }
 }

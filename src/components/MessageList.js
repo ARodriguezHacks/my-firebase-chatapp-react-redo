@@ -46,33 +46,36 @@ class MessageList extends Component {
 
     this.setState({ username: '', content: '', sentAt: '', roomId: '' });
   }
-
+  
   render() {
     return(
       <div>
-        <form onSubmit={this.createMessage}>
-          <label>New Message</label> <br />
-          <div className="message-area">
-            <textarea className="message-box" value={this.state.content} onChange={this.handleChange} required></textarea>
-            <input type="submit" className="btn-blue" value="Submit" />
-          </div>
-        </form>
-        <div className="message-margin">
-          <h4>Messages</h4>
+        <div className="message-margin overflow-auto">
+          <h4 className="d-inline-block">Messages</h4>
+          <h5 className="d-inline-block float-right mr-5">Current room: {this.props.activeRoomName}</h5>
           <ul className="list-unstyled overflow-auto messages-container">
             {this.state.messages.map( (message) => {
               if (message.roomId === this.props.setActiveRoom) {
                 return (
-                <div className="border bg-white mb-2" key={message.key}>
+                <div className="border bg-white mb-1 shadow-sm" key={message.key}>
                   <li>{message.content} <br />
                     <span><strong><em>{message.username}</em></strong></span>
                   </li>
-                </div> )
+                </div>)
                 }
                 return (null);
               })
             }
           </ul>
+        </div>
+        <div className="form-margin">
+          <form onSubmit={this.createMessage}>
+            <label>New Message</label> <br />
+            <div className="message-area">
+              <textarea className="message-box" rows="4" value={this.state.content} onChange={this.handleChange} required></textarea>
+              <button type="submit" className="btn btn-blue">Submit</button>
+            </div>
+          </form>
         </div>
       </div>
     );
