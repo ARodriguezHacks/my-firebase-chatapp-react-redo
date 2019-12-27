@@ -3,21 +3,27 @@
 Parle! was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Description
-Parle! is an React.js interactive chat app developed with organization in mind. Built with Google's Firebase BaaS, users can send messages in real time by creating separate chat rooms from which to send particular messages. Users also have the ability to delete their chat rooms, which in turn deletes the room's messages.
+Parle! is a React.js interactive chat app developed with organization in mind. Built with Google's Firebase BaaS, users can send messages in real time by creating separate chat rooms. Users also have the ability to delete their chat rooms, which in turn deletes the room's messages.
 
 Thanks to Firebase, rooms and messages are stored as objects inside a Firebase database. This creates more ease for performing various CRUD actions including creating and deleting.  
 
-Parle! can be used by guest users for reading and writing messages; however, only authorized users can start creating their own rooms and receiving additional access such as editing their own messages or deleting chat rooms.
+## Current Features:
+* View, create, edit and delete chat rooms
+* Read and write messages
+* User sign-up and log-in
+* Responsive design (mobile-friendly)
 
-![Parle! Landing Page](public/assets/images/parlechat1.png)
+![Parle! Landing Page](public/assets/images/parle-chat-app-3-min.png)
 
 ## Motivation
 
-Parle! was inspired by the everyday need to communicate with others via simplistic and enjoyable methods. In the French language, the verb for "to speak" is _parler_. As such, _parle!_ is the imperative for saying "(you) Speak!" The goal of Parle! is to provide a stylish and classic experience for communicating with friends and family and on any device.
+Parle! was inspired by the everyday need to communicate with others via simplistic and enjoyable methods. In the French language, the verb for "to speak" is _parler_. As such, _parle!_ is the imperative for saying "(you) Speak!" The goal of Parle! is to provide a simplistic and classic experience for communicating with friends and family and on any device.
 
 ## Viewing the Project
 
 Working demo availble here (hosted on Firebase): https://my-firebase-react-chatapp.firebaseapp.com/
+
+![Loggin In To Parle Chat App](https://media.giphy.com/media/KGdxh83aHZmDb570J0/giphy.gif)
 
 # Getting Started
 
@@ -60,8 +66,7 @@ Once `npm install` has finished installing, you can now run the project on your 
 
 Now you can start chatting away!
 
-Click on the image below to watch a demo on Dailymotion:
-[![Parle! Preview Video](public/assets/images/parlechat2.png)](https://www.dailymotion.com/video/k3L3qykV9I50KjtNaO5)
+![Parle! Create Message Video](https://media.giphy.com/media/l4RNvHANLmlkImV7NA/giphy.gif)
 
 Although guest users can only read and create messages, they will still be saved in the project's Firebase database. Only signed-up users can create and delete new chat rooms.
 
@@ -123,7 +128,10 @@ class MessageList extends Component {
 
 ## Additional Screenshots: 
 
-![Parle! Landing Page](public/assets/images/parlechat3.png)
+![Parle! Screenshot 2](public/assets/images/parle-chat-app-2-min.png)
+
+_Mobile Friendly_
+![Parle! Screenshot Mobile 1](public/assets/images/parle-chat-responsive-1-min.png)
 
 ## How to Contribute
 
