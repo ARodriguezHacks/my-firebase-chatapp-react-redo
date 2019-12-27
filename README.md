@@ -9,7 +9,7 @@ Thanks to Firebase, rooms and messages are stored as objects inside a Firebase d
 
 Parle! can be used by guest users for reading and writing messages; however, only authorized users can start creating their own rooms and receiving additional access such as editing their own messages or deleting chat rooms.
 
-![Parle! Landing Page](assets/images/parlechat1.png)
+![Parle! Landing Page](public/assets/images/parlechat1.png)
 
 ## Motivation
 
@@ -61,7 +61,7 @@ Once `npm install` has finished installing, you can now run the project on your 
 Now you can start chatting away!
 
 Click on the image below to watch a demo on Dailymotion:
-[![Parle! Preview Video](assets/images/parlechat2.png)](https://www.dailymotion.com/video/k3L3qykV9I50KjtNaO5)
+[![Parle! Preview Video](public/assets/images/parlechat2.png)](https://www.dailymotion.com/video/k3L3qykV9I50KjtNaO5)
 
 Although guest users can only read and create messages, they will still be saved in the project's Firebase database. Only signed-up users can create and delete new chat rooms.
 
@@ -123,7 +123,7 @@ class MessageList extends Component {
 
 ## Additional Screenshots: 
 
-![Parle! Landing Page](assets/images/parlechat3.png)
+![Parle! Landing Page](public/assets/images/parlechat3.png)
 
 ## How to Contribute
 

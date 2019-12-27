@@ -129,30 +129,34 @@ class App extends Component {
         <Navbar className="d-flex blue-nav justify-content-between">
           <Navbar.Brand className="logo">Parle!</Navbar.Brand>
           <Nav>
-            <li>
               <User firebase={firebase} currentUser={this.state.user} setUser={this.setUser} />
-            </li>
           </Nav>
         </Navbar>
         <div>
 
           <div className="mobile">
             {this.state.activeRoom ?
-              (<Row>
-                <Col className="column-left-mobile">
-                  <Button onClick={this.openNav} className="btn btn-info mobile">{`< Change Room`}</Button>
-                </Col>
+              (<div>
+                <div>
+                  <h6>Change room</h6>
+                  <Button onClick={this.openNav} className="btn btn-info mobile">
+                    <img src="/assets/images/icons8-arrow-pointing-left-50.png" width="55%" alt="arrow icon"/>
+                  </Button>
+                </div>
                 { this.state.user ?
-                <Col className="column-right-mobile pt-5">
-                  <Button variant="success" className="btn-spacing" onClick={ (e) => this.editingRoom(e)}>Edit</Button>
-                  <Button variant="danger" onClick={ (e) => this.deleteRoom(e)}>Delete</Button>
-                </Col>
+                <div className="my-4">
+                  <h5>Current room: {this.state.activeRoomName}</h5>
+                  <Button variant="success" className="btn-spacing" onClick={ (e) => this.editingRoom(e)}><img src="/assets/images/icons8-edit-50.png" width="55%" alt="edit icon"/></Button>
+                  <Button variant="danger" onClick={ (e) => this.deleteRoom(e)}><img src="/assets/images/icons8-trash-50.png" width="55%" alt="trash icon"/></Button>
+                </div>
                  : null
                 }
-              </Row>) : 
+              </div>) : 
               (<div className="ml-2">
                 <h2>Select Room to get started!</h2>
-                <Button onClick={this.openNav} className="btn btn-info mobile">{`< Select Room`}</Button>
+                <Button onClick={this.openNav} className="btn btn-info mobile">
+                  <img src="/assets/images/icons8-arrow-pointing-left-50.png" width="55%" alt="arrow icon"/>
+                </Button>
               </div>)
             }
 
@@ -169,37 +173,40 @@ class App extends Component {
             
             <div id="mySidenav" className="sidenav text-center">
               <button className="closebtn" onClick={this.closeNav}>&times;</button>
-                <RoomList firebase={firebase} activeRoom={this.state.activeRoom} activeRoomName={this.state.activeRoomName} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
+              <RoomList firebase={firebase} activeRoom={this.state.activeRoom} activeRoomName={this.state.activeRoomName} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
             </div>
           </div>
 
           <div className="non-mobile">
             <Row>
               <Col className="col-4 col-margin">
+              <h5 className="d-inline-block">Current room: {this.state.activeRoomName}</h5>
+              <div>
+                { this.state.activeRoom ?
+                <div>
+                { this.state.user? 
+                <div>
+                  <Button variant="success" className="mb-1 btn-spacing" onClick={ (e) => this.editingRoom(e)}><img src="/assets/images/icons8-edit-50.png" width="55%" alt="edit icon"/></Button>
+                  <Button variant="danger" className="mb-1" onClick={ (e) => this.deleteRoom(e)}><img src="/assets/images/icons8-trash-50.png" width="55%" alt="trash icon"/></Button>
+                </div> : null
+                }
+                { this.state.editingRoom ?
+                (<form onSubmit={ (e) => this.updateRoom(e) }>
+                  <input type="text" id="editingRoom" value={this.state.roomChange} onChange={ (e) => this.handleRoomChange(e) } />
+                  <button type="submit">Save</button>
+                  <button type="submit" onClick={(e) => this.cancelSave(e)}>Cancel</button>
+                </form>) : null }
+                </div> : null
+                }
+               </div>
                 <RoomList firebase={firebase} activeRoom={this.state.activeRoom} activeRoomName={this.state.activeRoomName} setActiveRoom={this.setActiveRoom} currentUser={this.state.user} />
               </Col>
               <Col>
                 { this.state.activeRoom ?
                     (<div>
                       <MessageList firebase={firebase} setActiveRoom={this.state.activeRoom.key} activeRoomName={this.state.activeRoomName} currentUser={this.state.user ? this.state.user.displayName : 'Guest'} />
-                    </div>) : (null)
+                    </div>) : (<h3>Click on a room to get started!</h3>)
                 }
-              { this.state.activeRoom ?
-              (<div>
-                { this.state.user? 
-                <div>
-                  <Button variant="success" className="mb-1 btn-spacing" onClick={ (e) => this.editingRoom(e)}>Edit</Button>
-                  <Button variant="danger"className="mb-1" onClick={ (e) => this.deleteRoom(e)}>Delete</Button>
-                </div> : null
-                }
-               </div>) : (<h3>Click on a room to get started!</h3>)
-              }
-              { this.state.editingRoom ?
-                (<form onSubmit={ (e) => this.updateRoom(e) }>
-                  <input type="text" id="editingRoom" value={this.state.roomChange} onChange={ (e) => this.handleRoomChange(e) } />
-                  <button type="submit">Save</button>
-                  <button type="submit" onClick={(e) => this.cancelSave(e)}>Cancel</button>
-                </form>) : null}
               </Col>
             </Row>
             </div>

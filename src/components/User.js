@@ -122,7 +122,7 @@ class User extends Component {
 
   render() {
     return (
-      <section>
+      <section className="welcome-mobile">
         <h4>Welcome {(this.props.currentUser) ? this.props.currentUser.displayName : 'Guest'}!</h4>
         <button className="btn session-btn">
         {(this.props.currentUser) === null ?
@@ -131,7 +131,7 @@ class User extends Component {
         }
         </button>
         {(this.props.currentUser) !== null ? 
-          <button className="btn session-btn" onClick={this.signOut}>Sign Out</button> :
+          <button className="btn session-btn ml-1 welome-btn-margin" onClick={this.signOut}>Sign Out</button> :
           <button className="btn session-btn ml-1" onClick={this.startSignUp}>Sign up</button>
         }
         <form id="signUp-form" onSubmit={(e) => this.submitSignUpForm(e)}>

@@ -58,13 +58,13 @@ class RoomList extends Component {
   render() {
     return (
       <section>
-        <div className="rooms-margin">       
+        <div className="rooms-margin">
           { firebase.auth().currentUser ? (
-          <form onSubmit={ (e) => this.createRoom(e) }>
-            <label>Create New Room</label>
-            <input type="text" value={this.state.name} onChange={ (e) => this.handleChange(e) } required/>
-            <button type="submit">Create Room</button>
-          </form>) : (<p>Please sign in to create chat rooms!</p>)
+            <form onSubmit={ (e) => this.createRoom(e) }>
+              <label>Create New Room</label>
+              <input type="text" value={this.state.name} onChange={ (e) => this.handleChange(e) } required/>
+              <button type="submit" className="text-success">Create Room</button>
+            </form>) : (<p>Please sign in to create chat rooms!</p>)
           }
         </div>
         <div className="rooms-margin">

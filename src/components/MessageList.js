@@ -52,7 +52,6 @@ class MessageList extends Component {
       <div>
         <div className="message-margin overflow-auto">
           <h4 className="d-inline-block">Messages</h4>
-          <h5 className="d-inline-block float-right mr-5">Current room: {this.props.activeRoomName}</h5>
           <ul className="list-unstyled overflow-auto messages-container">
             {this.state.messages.map( (message) => {
               if (message.roomId === this.props.setActiveRoom) {
@@ -73,7 +72,7 @@ class MessageList extends Component {
             <label>New Message</label> <br />
             <div className="message-area">
               <textarea className="message-box" rows="4" value={this.state.content} onChange={this.handleChange} required></textarea>
-              <button type="submit" className="btn btn-blue">Submit</button>
+              <button type="submit" className="btn btn-blue"><img src="/assets/images/icons8-email-send-50-2.png" width="20%" alt="send-email icon"/></button>
             </div>
           </form>
         </div>

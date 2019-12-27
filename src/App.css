@@ -95,6 +95,10 @@ ul li {
     display: none;
   }
 
+  .btn-margin {
+    margin-top: 1rem;
+  }
+
   .message-box {
     width: 95%;
     margin: auto;
@@ -135,8 +139,12 @@ ul li {
     width: 95%;
   }
 
-  .message-margin {
-    margin-top: 1rem;
+  .welcome-mobile {
+    margin-left: 1rem;
+  }
+
+  .welome-btn-margin {
+    margin-top: 0.25rem;
   }
 
   .messages-container {
@@ -153,6 +161,10 @@ ul li {
 @media screen and (min-width: 768px) {
 
   .mobile {
+    display: none;
+  }
+
+  .mobile-room-title {
     display: none;
   }
 
