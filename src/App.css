@@ -53,14 +53,8 @@ ul li {
   background-color: #6569e4;
 }
 
-.submit-btn {
+.submit-btn, .cancel-btn {
   margin: 0px 0px 5% 5%;
-  background-color: yellow;
-}
-
-.cancel-btn {
-  margin: 0px 0px 5% 5%;
-  background-color: red;
 }
 
 /* ------- Mobile Styles -----*/
@@ -99,31 +93,9 @@ ul li {
     margin-top: 1rem;
   }
 
-  .message-box {
+  .message-box, .list-unstyled {
     width: 95%;
     margin: auto;
-  }
-
-  .list-unstyled {
-    width: 95%;
-    margin: auto;
-  }
-
-  .row {
-    max-width: 100%;
-  }
-
-  .column-left-mobile {
-    text-align: center;
-    width: 50%;
-    margin-left: 5px;
-    padding-right: 0px;
-  }
-
-  .column-right-mobile {
-    width: 50%;
-    padding-right: 0;
-    text-align: center;
   }
 
   #signUp-form {
@@ -143,7 +115,7 @@ ul li {
     margin-left: 1rem;
   }
 
-  .welome-btn-margin {
+  .welcome-btn-margin {
     margin-top: 0.25rem;
   }
 
@@ -161,10 +133,6 @@ ul li {
 @media screen and (min-width: 768px) {
 
   .mobile {
-    display: none;
-  }
-
-  .mobile-room-title {
     display: none;
   }
 

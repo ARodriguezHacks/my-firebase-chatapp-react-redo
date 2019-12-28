@@ -139,7 +139,7 @@ class App extends Component {
               (<div>
                 <div>
                   <h6>Change room</h6>
-                  <Button onClick={this.openNav} className="btn btn-info mobile">
+                  <Button onClick={this.openNav} className="btn btn-info">
                     <img src="/assets/images/icons8-arrow-pointing-left-50.png" width="55%" alt="arrow icon"/>
                   </Button>
                 </div>
@@ -154,7 +154,7 @@ class App extends Component {
               </div>) : 
               (<div className="ml-2">
                 <h2>Select Room to get started!</h2>
-                <Button onClick={this.openNav} className="btn btn-info mobile">
+                <Button onClick={this.openNav} className="btn btn-info">
                   <img src="/assets/images/icons8-arrow-pointing-left-50.png" width="55%" alt="arrow icon"/>
                 </Button>
               </div>)

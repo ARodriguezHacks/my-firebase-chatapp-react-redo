@@ -131,8 +131,8 @@ class User extends Component {
         }
         </button>
         {(this.props.currentUser) !== null ? 
-          <button className="btn session-btn ml-1 welome-btn-margin" onClick={this.signOut}>Sign Out</button> :
-          <button className="btn session-btn ml-1" onClick={this.startSignUp}>Sign up</button>
+          <button className="btn session-btn ml-1 welcome-btn-margin" onClick={this.signOut}>Sign Out</button> :
+          <button className="btn session-btn ml-1 welcome-btn-margin" onClick={this.startSignUp}>Sign up</button>
         }
         <form id="signUp-form" onSubmit={(e) => this.submitSignUpForm(e)}>
           <h4 className="text-center">Sign up to start chatting</h4>
