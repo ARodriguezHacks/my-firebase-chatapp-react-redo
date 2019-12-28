@@ -81,6 +81,7 @@ class User extends Component {
       }
     })
     .catch(error => {
+      alert(error);
       this.setState({ error });
     });
   }
@@ -97,6 +98,7 @@ class User extends Component {
       });
     })
     .catch(error => {
+      alert(error);
       this.setState({ error });
     });
     form.style.visibility = "hidden";
